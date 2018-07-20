@@ -6,6 +6,7 @@
 	"dependencies": {
 		"cheerio": "^1.0.0-rc.2",
 		"mongoose": "^5.2.4",
+		"pm2": "^3.0.0",
 		"ytdl-core": "^0.21.0"
 	},
 	"devDependencies": {},
