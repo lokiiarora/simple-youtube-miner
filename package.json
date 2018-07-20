@@ -1,0 +1,23 @@
+{
+	"name": "youtube-miner",
+	"version": "0.0.1",
+	"description": "A simple youtube metadata miner",
+	"main": "index.js",
+	"dependencies": {
+		"cheerio": "^1.0.0-rc.2",
+		"mongoose": "^5.2.4",
+		"ytdl-core": "^0.21.0"
+	},
+	"devDependencies": {},
+	"scripts": {
+		"scrape:id": "node actions/scrapeMoreId.js",
+		"scrape:meta": "node actions/feedMetaData.js"
+	},
+	"keywords": [
+		"youtube",
+		"data",
+		"miner"
+	],
+	"author": "Lokesh Raj Arora",
+	"license": "MIT"
+}
