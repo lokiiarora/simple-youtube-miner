@@ -35,7 +35,10 @@ const binData = (data, id) => ({
 
 const init = async () => {
   let i = 0;
-  const cursor = URLModel.collection.find({}).stream();
+  const cursor = URLModel.collection
+    .find({})
+    .sort("createdAt")
+    .stream();
   for (
     let doc = await cursor.next();
     await cursor.hasNext();
