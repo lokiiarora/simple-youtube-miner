@@ -27,7 +27,7 @@ const binData = (data, id) => ({
   keywords: data.keywords,
   author: data.author,
   title: data.title,
-  description: data.description,
+  description: data.description || "",
   publishedAt: new Date(data.published),
   view_count: parseInt(data.view_count, 10),
   length_seconds: parseInt(data.length_seconds, 10)
