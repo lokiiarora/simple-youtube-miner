@@ -45,11 +45,16 @@ const init = async () => {
     doc = await cursor.next()
   ) {
     try {
-      const info = await perPromise(doc);
-      const docMeta = new MetaModel(binData(info, doc._id));
-      await docMeta.save();
-      i++;
-      console.log(`Saved ${i}th video`);
+      const dataFromMetaModel = await MetaModel.findOne({ parentRef: doc._id });
+      if (dataFromMetaModel) {
+        console.log("Already exists");
+      } else {
+        const info = await perPromise(doc);
+        const docMeta = new MetaModel(binData(info, doc._id));
+        await docMeta.save();
+        i = await MetaModel.collection.countDocuments();
+        console.log(`Saved ${i}th video`);
+      }
     } catch (e) {
       console.error(e);
     }
