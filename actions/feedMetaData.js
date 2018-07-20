@@ -10,7 +10,6 @@ mongoose
 	.then(async () => {
 		await init();
 	})
-	.catch(err => console.exception);
 
 const perPromise = data => {
 	return new Promise((resolve, reject) => {
