@@ -38,7 +38,7 @@ const init = async () => {
       .cursor();
   }
   let doc = await cursor.next();
-  if (!doc) {
+  if (doc) {
     try {
       let arr = await getRelatedVideos(doc.href);
       console.log(arr);
