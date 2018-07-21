@@ -32,20 +32,14 @@ const getRelatedVideos = id => {
 const init = async () => {
   let cursor = await URLModel.find({})
     .sort("-createdAt")
-    .stream();
-  for (
-    let doc = await cursor.next();
-    await cursor.hasNext();
-    doc = await cursor.next()
-  ) {
+    .cursor();
+  for (let doc = await cursor.next(); doc !== null; doc = await cursor.next()) {
     try {
       let arr = await getRelatedVideos(doc.href);
       console.log(arr);
       await URLModel.insertMany(arr);
       let count = await URLModel.collection.countDocuments();
-      if (count >= MAX_IDs) {
-        process.exit(0);
-      }
+      console.log(`${count}th record`);
     } catch (e) {
       console.error(e);
     }

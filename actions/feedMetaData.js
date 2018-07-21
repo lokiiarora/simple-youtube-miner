@@ -1,7 +1,9 @@
+// @ts-check
 const { getInfo } = require("ytdl-core");
 const mongoose = require("mongoose");
 const URLModel = require("../models/urls");
 const MetaModel = require("../models/metaDataModel");
+const pm2 = require("pm2");
 const { MONGO_URI } = require("../settings");
 mongoose.Promise = global.Promise;
 mongoose.set("debug", true);
@@ -59,6 +61,27 @@ const init = async () => {
       console.error(e);
     }
   }
+  return;
 };
 
-process.on("unhandledRejection", console.error);
+process.on("unhandledRejection", (...args) => {
+  console.error(`Process has failed with ${args}\n Restarting it`);
+  pm2.connect(err => {
+    if (err) {
+      console.error("Caught an error while restarting");
+      console.error(err);
+      process.exit(0);
+    } else {
+      pm2.restart("MetaScraper", (...reloadArgs) => {
+        if (reloadArgs[0]) {
+          console.error("Caught an error while restarting");
+          console.error(reloadArgs[0]);
+          process.exit(0);
+        } else {
+          console.log("Successfully restarted\nProcess info:");
+          console.log(reloadArgs[1]);
+        }
+      });
+    }
+  });
+});
