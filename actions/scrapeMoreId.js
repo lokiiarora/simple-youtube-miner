@@ -29,11 +29,16 @@ const getRelatedVideos = id => {
   });
 };
 
+let cursor;
+
 const init = async () => {
-  let cursor = await URLModel.find({})
-    .sort("-createdAt")
-    .cursor();
-  for (let doc = await cursor.next(); doc !== null; doc = await cursor.next()) {
+  if (!cursor) {
+    cursor = await URLModel.find({})
+      .sort("-createdAt")
+      .cursor();
+  }
+  let doc = await cursor.next();
+  if (!doc) {
     try {
       let arr = await getRelatedVideos(doc.href);
       console.log(arr);
@@ -43,7 +48,11 @@ const init = async () => {
     } catch (e) {
       console.error(e);
     }
+  } else {
+    console.log(`All done!`);
+    return;
   }
+  await init();
 };
 
 process.on("unhandledRejection", (...args) => {
