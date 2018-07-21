@@ -35,19 +35,21 @@ const binData = (data, id) => ({
   length_seconds: parseInt(data.length_seconds, 10)
 });
 
+let cursor;
+
 const init = async () => {
   let i = 0;
-  const cursor = URLModel.collection
-    .find({})
-    .sort("createdAt")
-    .stream();
-  for (
+  if (!cursor) {
+    cursor = await URLModel.collection
+      .find({})
+      .sort("createdAt")
+      .stream();
+  } else {
     let doc = await cursor.next();
-    await cursor.hasNext();
-    doc = await cursor.next()
-  ) {
     try {
-      const dataFromMetaModel = await MetaModel.findOne({ parentRef: doc._id });
+      const dataFromMetaModel = await MetaModel.findOne({
+        parentRef: doc._id
+      });
       if (dataFromMetaModel) {
         console.log("Already exists");
       } else {
@@ -60,8 +62,13 @@ const init = async () => {
     } catch (e) {
       console.error(e);
     }
+    if (await cursor.hasNext()) {
+      await init();
+    } else {
+      console.log(`All clean!`);
+      return;
+    }
   }
-  return;
 };
 
 process.on("unhandledRejection", (...args) => {
