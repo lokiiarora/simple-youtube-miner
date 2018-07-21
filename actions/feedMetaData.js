@@ -44,30 +44,29 @@ const init = async () => {
       .find({})
       .sort("createdAt")
       .stream();
-  } else {
-    let doc = await cursor.next();
-    try {
-      const dataFromMetaModel = await MetaModel.findOne({
-        parentRef: doc._id
-      });
-      if (dataFromMetaModel) {
-        console.log("Already exists");
-      } else {
-        const info = await perPromise(doc);
-        const docMeta = new MetaModel(binData(info, doc._id));
-        await docMeta.save();
-        i = await MetaModel.collection.countDocuments();
-        console.log(`Saved ${i}th video`);
-      }
-    } catch (e) {
-      console.error(e);
-    }
-    if (await cursor.hasNext()) {
-      await init();
+  }
+  let doc = await cursor.next();
+  try {
+    const dataFromMetaModel = await MetaModel.findOne({
+      parentRef: doc._id
+    });
+    if (dataFromMetaModel) {
+      console.log("Already exists");
     } else {
-      console.log(`All clean!`);
-      return;
+      const info = await perPromise(doc);
+      const docMeta = new MetaModel(binData(info, doc._id));
+      await docMeta.save();
+      i = await MetaModel.collection.countDocuments();
+      console.log(`Saved ${i}th video`);
     }
+  } catch (e) {
+    console.error(e);
+  }
+  if (await cursor.hasNext()) {
+    await init();
+  } else {
+    console.log(`All clean!`);
+    return;
   }
 };
 
