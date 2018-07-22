@@ -41,8 +41,12 @@ const init = async () => {
   if (doc) {
     try {
       let arr = await getRelatedVideos(doc.href);
-      console.log(arr);
-      await URLModel.insertMany(arr);
+      await Promise.all(
+        arr.map(async relatedVideo => {
+          let docID = new URLModel(relatedVideo);
+          await docID.save();
+        })
+      );
       let count = await URLModel.collection.countDocuments();
       console.log(`${count}th record`);
     } catch (e) {
