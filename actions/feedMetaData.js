@@ -40,10 +40,7 @@ let cursor;
 const init = async () => {
   let i = 0;
   if (!cursor) {
-    cursor = await URLModel.collection
-      .find({})
-      .sort("createdAt")
-      .stream();
+    cursor = await URLModel.collection.find({}).stream();
   }
   let doc = await cursor.next();
   try {

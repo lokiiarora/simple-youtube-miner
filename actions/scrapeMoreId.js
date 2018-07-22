@@ -33,9 +33,7 @@ let cursor;
 
 const init = async () => {
   if (!cursor) {
-    cursor = await URLModel.find({})
-      .sort("-createdAt")
-      .cursor();
+    cursor = await URLModel.find({}).cursor();
   }
   let doc = await cursor.next();
   if (doc) {
