@@ -53,6 +53,11 @@ const init = async () => {
       const info = await perPromise(doc);
       const docMeta = new MetaModel(binData(info, doc._id));
       await docMeta.save();
+      await URLModel.findByIdAndUpdate(
+        doc._id,
+        { done: true },
+        { upsert: true }
+      );
       i = await MetaModel.collection.countDocuments();
       console.log(`Saved ${i}th video`);
     }
