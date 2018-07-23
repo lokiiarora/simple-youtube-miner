@@ -21,7 +21,7 @@ const init = async () => {
   let doc = await cursor.next();
   if (doc) {
     try {
-      let urldoc = await URLModel.findByIdAndRemove(doc.parentRef);
+      let urldoc = await URLModel.deleteOne({ _id: doc.parentRef });
       let count = await URLModel.collection.countDocuments();
       console.log(`${count} documents still left`);
     } catch (e) {
