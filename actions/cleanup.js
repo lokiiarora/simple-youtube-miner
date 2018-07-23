@@ -18,7 +18,7 @@ const init = async () => {
   if (!cursor) {
     cursor = await MetaModel.find({}, { parentRef: 1 }).cursor();
   }
-  let doc = cursor.next();
+  let doc = await cursor.next();
   if (doc) {
     try {
       let urldoc = await URLModel.findByIdAndRemove(doc.parentRef);
