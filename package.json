@@ -12,7 +12,8 @@
 	"devDependencies": {},
 	"scripts": {
 		"scrape:id": "node actions/scrapeMoreId.js",
-		"scrape:meta": "node actions/feedMetaData.js"
+		"scrape:meta": "node actions/feedMetaData.js",
+		"cleanup": "node actions/cleanup.js"
 	},
 	"keywords": [
 		"youtube",
