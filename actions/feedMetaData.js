@@ -40,7 +40,7 @@ let cursor;
 const init = async () => {
   let i = 0;
   if (!cursor) {
-    cursor = await URLModel.collection.find({}).stream();
+    cursor = await URLModel.collection.find({ done: false }).stream();
   }
   let doc = await cursor.next();
   try {
@@ -57,7 +57,10 @@ const init = async () => {
       console.log(`Saved ${i}th video`);
     }
   } catch (e) {
-    console.error(e);
+    console.dir(e);
+    if (e.message && e.message.includes("This video")) {
+      await URLModel.findByIdAndRemove(doc._id);
+    }
   }
   if (await cursor.hasNext()) {
     await init();
