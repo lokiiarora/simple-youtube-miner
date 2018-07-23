@@ -63,8 +63,8 @@ const init = async () => {
       console.log(`Saved ${i}th video`);
     }
   } catch (e) {
-    console.dir(e);
-    if (e.message && e.message.includes("This video")) {
+    console.dir(e.message);
+    if (e.message && e.message.startsWith("Th")) {
       await URLModel.findByIdAndRemove(doc._id);
     }
   }
