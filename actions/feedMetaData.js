@@ -49,6 +49,7 @@ const init = async () => {
     });
     if (dataFromMetaModel) {
       console.log("Already exists");
+      await URLModel.findByIdAndUpdate(doc._id, { done: true });
     } else {
       const info = await perPromise(doc);
       const docMeta = new MetaModel(binData(info, doc._id));
