@@ -84,7 +84,7 @@ process.on("unhandledRejection", (...args) => {
       console.error(err);
       process.exit(0);
     } else {
-      pm2.restart("MetaScraper", (...reloadArgs) => {
+      pm2.restart(process.argv[2], (...reloadArgs) => {
         if (reloadArgs[0]) {
           console.error("Caught an error while restarting");
           console.error(reloadArgs[0]);

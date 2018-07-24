@@ -59,7 +59,7 @@ const init = async () => {
 
 process.on("unhandledRejection", (...args) => {
   console.error(`Process has failed with ${args}\n Restarting it`);
-  pm2.restart("IDScraper", (...reloadArgs) => {
+  pm2.restart(process.argv[2], (...reloadArgs) => {
     if (reloadArgs[0]) {
       console.error("Caught an error while restarting");
       console.error(reloadArgs[0]);
