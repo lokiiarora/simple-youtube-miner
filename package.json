@@ -4,7 +4,11 @@
 	"description": "A simple youtube metadata miner",
 	"main": "index.js",
 	"dependencies": {
+		"chalk": "^2.4.1",
+		"chart.js": "^2.7.2",
+		"chartjs-node": "^1.7.1",
 		"cheerio": "^1.0.0-rc.2",
+		"meow": "^5.0.0",
 		"mongoose": "^5.2.4",
 		"pm2": "^3.0.0",
 		"ytdl-core": "git+https://git@github.com/lokiiarora/node-ytdl-core.git"
@@ -13,7 +17,8 @@
 	"scripts": {
 		"scrape:id": "node actions/scrapeMoreId.js",
 		"scrape:meta": "node actions/feedMetaData.js",
-		"cleanup": "node actions/cleanup.js"
+		"cleanup": "node actions/cleanup.js",
+		"export:charts": "node actions/export.js"
 	},
 	"keywords": [
 		"youtube",

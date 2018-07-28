@@ -1,2 +1,4 @@
 node_modules/
 dump/
+.DS_Store
+exports/*.jpeg
