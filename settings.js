@@ -10,5 +10,9 @@ module.exports = {
   timeMapperObj: timeMapperObj,
   timeMapper: time =>
     timeMapperObj[time] ? timeMapperObj[time] : "Other Larger videos",
-  defaultFilePath: path.resolve(__dirname, "exports")
+  defaultFilePath: path.resolve(__dirname, "exports"),
+  knownErrorMessages: [
+    "The YouTube account associated with this video has been terminated due to multiple third-party notifications of copyright infringement.",
+    "The video"
+  ]
 };

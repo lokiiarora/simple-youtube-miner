@@ -1,7 +1,7 @@
 // @ts-check
 const ChartjsNode = require("chartjs-node");
 const chalk = require("chalk");
-const { defaultFilePath } = require("../../settings");
+const { defaultFilePath, knownErrorMessages } = require("../../settings");
 const path = require("path");
 const fs = require("fs");
 
@@ -60,4 +60,15 @@ const chalkDefaults = {
   success: chalk.default.bgGreen.black
 };
 
-module.exports = { genRandomColor, genImage, chalkDefaults };
+const errorPlexer = ({ message }) => {
+  let result = false;
+  knownErrorMessages.map(messageKnown => {
+    result =
+      result ||
+      message.includes(messageKnown) ||
+      message.startsWith(messageKnown);
+  });
+  return result;
+};
+
+module.exports = { genRandomColor, genImage, chalkDefaults, errorPlexer };

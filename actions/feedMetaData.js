@@ -2,6 +2,7 @@
 const { getInfo } = require("ytdl-core");
 const mongoose = require("mongoose");
 const URLModel = require("../models/urls");
+const { errorPlexer } = require("./subactions/common");
 const MetaModel = require("../models/metaDataModel");
 const pm2 = require("pm2");
 const { MONGO_URI } = require("../settings");
@@ -64,7 +65,7 @@ const init = async () => {
     }
   } catch (e) {
     console.dir(e.message);
-    if (e.message && e.message.startsWith("Th")) {
+    if (e.message && errorPlexer(e.message)) {
       await URLModel.findByIdAndRemove(doc._id);
     }
   }
