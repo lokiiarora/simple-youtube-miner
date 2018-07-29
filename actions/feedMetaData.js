@@ -65,7 +65,7 @@ const init = async () => {
     }
   } catch (e) {
     console.dir(e.message);
-    if (e.message && errorPlexer(e.message)) {
+    if (e.message && errorPlexer(e)) {
       await URLModel.findByIdAndRemove(doc._id);
     }
   }
